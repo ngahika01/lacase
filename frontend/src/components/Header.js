@@ -9,6 +9,9 @@ import SearchBox from "./SearchBox";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const logoutHandler = () => {
@@ -29,6 +32,9 @@ const Header = () => {
               <LinkContainer to="/cart">
                 <Nav.Link>
                   <i className="fas fa-shopping-cart"></i> Cart
+                  <sup className="supp">
+                  {cartItems && cartItems.length}
+                  </sup>
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (

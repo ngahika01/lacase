@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Col } from "react-bootstrap";
+import { Form, Button, Col, Image } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../components/FormContainer";
 import { savePaymentMethod } from "../actions/cartActions";
@@ -28,15 +28,23 @@ const PaymentScreen = ({ history }) => {
           <Form.Label as="legend">Select Method</Form.Label>
 
           <Col>
-            <Form.Check
-              type="radio"
-              label="PayPal or Credit Card"
-              id="PayPal"
-              name="paymentMethod"
-              value="paypal"
-              checked
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            ></Form.Check>
+            <div className="mpsa">
+              <Form.Check
+                type="radio"
+                label="Mpesa"
+                id="mpesa"
+                name="paymentMethod"
+                value="mpesa"
+                checked
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              ></Form.Check>
+              <Image
+                className="w-50"
+                src={
+                  "https://hapakenya.com/wp-content/uploads/2019/06/lipa-na-mpesa-paybill.png"
+                }
+              />
+            </div>
           </Col>
         </Form.Group>
         <Button type="submit" variant="primary">

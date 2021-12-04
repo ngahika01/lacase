@@ -14,6 +14,7 @@ const authUser = AsyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      phoneNumber: user.phoneNumber,
       token: generateToken(user._id),
     });
   } else {
@@ -36,6 +37,7 @@ const registerUser = AsyncHandler(async (req, res) => {
     name,
     email,
     password,
+    phoneNumber,
   });
   if (user) {
     res.status(201).json({
@@ -43,8 +45,8 @@ const registerUser = AsyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      phoneNumber: user.phoneNumber,
       token: generateToken(user._id),
-
     });
   } else {
     res.status(400);
@@ -62,6 +64,7 @@ const getUserProfile = AsyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      phoneNumber: user.phoneNumber,
     });
   } else {
     res.status(404);
@@ -77,6 +80,7 @@ const updateUserProfile = AsyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body = user.email;
+    user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
     if (req.body.password) {
       user.password = req.body.password;
     }
@@ -86,6 +90,7 @@ const updateUserProfile = AsyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
+      phoneNumber: updatedUser.phoneNumber,
       token: generateToken(updatedUser._id),
     });
   } else {
@@ -139,6 +144,7 @@ const updateUser = AsyncHandler(async (req, res) => {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     user.isAdmin = req.body.isAdmin;
+    user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
 
     const updatedUser = await user.save();
 
@@ -146,6 +152,8 @@ const updateUser = AsyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      phoneNumber: updatedUser.phoneNumber,
+
       isAdmin: updatedUser.isAdmin,
     });
   } else {

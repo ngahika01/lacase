@@ -61,3 +61,15 @@ h2 {
   object-fit: contain !important;
   max-height: 200px;
 }
+.supp {
+  font-size: 16px;
+  color: white;
+
+}
+.mpsa{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+
+}
