@@ -10,6 +10,7 @@ import { listMyOrders } from "../actions/orderActions";
 const ProfileScreen = ({ history }) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
@@ -36,6 +37,7 @@ const ProfileScreen = ({ history }) => {
       } else {
         setName(user.name);
         setEmail(user.email);
+        setPhoneNumber(user.phoneNumber);
       }
     }
   }, [dispatch, history, userInfo, user]);
@@ -46,7 +48,9 @@ const ProfileScreen = ({ history }) => {
       setMessage("Passwords do not match");
     } else {
       //dispatch profile
-      dispatch(updateUserProfile({ id: user._id, name, email, password }));
+      dispatch(
+        updateUserProfile({ id: user._id, name, email, password, phoneNumber })
+      );
     }
   };
   return (
@@ -76,6 +80,15 @@ const ProfileScreen = ({ history }) => {
               placeholder="Enter email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group controlId="phone Number">
+            <Form.Label>Phone Number:</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Enter phone number"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
             ></Form.Control>
           </Form.Group>
           <Form.Group controlId="password">
@@ -127,9 +140,8 @@ const ProfileScreen = ({ history }) => {
 
                   <td>{order.totalPrice} </td>
                   <td>
-                  
                     {order.isPaid ? (
-                      order.paidAt.substring(0,10)
+                      order.paidAt.substring(0, 10)
                     ) : (
                       <i className="fas fa-times" style={{ color: "red" }}></i>
                     )}
@@ -144,7 +156,10 @@ const ProfileScreen = ({ history }) => {
                   </td>
                   <td>
                     <LinkContainer to={`/order/${order._id}`}>
-                      <Button className='btn-sm' variant="light"> Details</Button>
+                      <Button className="btn-sm" variant="light">
+                        {" "}
+                        Details
+                      </Button>
                     </LinkContainer>
                   </td>
                 </tr>
