@@ -1053,6 +1053,11 @@ mpath@0.8.4:
   resolved "https://registry.yarnpkg.com/mpath/-/mpath-0.8.4.tgz#6b566d9581621d9e931dd3b142ed3618e7599313"
   integrity sha512-DTxNZomBcTWlrMW76jy1wvV37X/cNNxPW1y2Jzd4DZkAaC5ZGsm8bfGfNOthcDuRJujXLqiuS6o3Tpy0JEoh7g==
 
+mpesa-api@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/mpesa-api/-/mpesa-api-3.0.2.tgz#21ae058eba05850be1d9f1863f51cb584c8a2ab8"
+  integrity sha512-lOueQBRwqD9wOWGNz+vYZuWclwJ5DTCoMoPutHqYcvlYeNZJtjvRvFqSqVV654qy8SZO/TPAJ6+PIybHkO9GBw==
+
 mquery@3.2.5:
   version "3.2.5"
   resolved "https://registry.yarnpkg.com/mquery/-/mquery-3.2.5.tgz#8f2305632e4bb197f68f60c0cffa21aaf4060c51"

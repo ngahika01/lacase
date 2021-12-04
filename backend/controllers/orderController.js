@@ -1,6 +1,59 @@
 import AsyncHandler from "express-async-handler";
 import Order from "..//models/orderModel.js";
 
+//Lipa na mpesa
+const lipaNaMpesa = AsyncHandler(async (req, res) => {
+
+  const environment = "sandbox";
+  const credentials = {
+    clientKey: process.env.CONSUMER_KEY,
+    clientSecret: process.env.CONSUMER_SECRET,
+    initiatorPassword: "Safaricom998!",
+  };
+  const mpesa = new Mpesa(credentials, environment);
+  const { amount, PartyA, PhoneNumber } = req.body;
+
+  try {
+    const response = await mpesa.lipaNaMpesaOnline({
+      BusinessShortCode: 174379,
+      Amount: amount /* 1000 is an example amount */,
+      PartyA: 254757164343,
+      PhoneNumber: 254757164343,
+      PartyB: 174379,
+      CallBackURL: "https://developer.safaricom.co.ke/",
+      AccountReference: "food app",
+      passKey: process.env.PASS_KEY,
+      TransactionType: "CustomerPayBillOnline",
+    });
+
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+  }
+});
+const queryStatus = AsyncHandler(async (req, res) => {
+  const environment = "sandbox";
+  const credentials = {
+    clientKey: process.env.CONSUMER_KEY,
+    clientSecret: process.env.CONSUMER_SECRET,
+    initiatorPassword: "Safaricom998!",
+  };
+  const mpesa = new Mpesa(credentials, environment);
+
+  const { checkoutRequestID } = req.body;
+
+  try {
+    const result = await mpesa.lipaNaMpesaQuery({
+      BusinessShortCode: 174379,
+      CheckoutRequestID: checkoutRequestID,
+      passKey: process.env.PASS_KEY,
+    });
+    res.json(result);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 // @desc create new Orer
 //@route post /api/orders
 //@access private
@@ -108,4 +161,6 @@ export {
   updateOrderToPaid,
   getMyOrders,
   updateOrderToDelivered,
+  lipaNaMpesa,
+  queryStatus,
 };
