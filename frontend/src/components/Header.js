@@ -19,10 +19,16 @@ const Header = () => {
   };
   return (
     <header>
-      <Navbar bg="dark" expand="lg" variant="dark" collapseOnSelect>
+      <Navbar className="bg-light  "
+      expand="lg"
+      
+      collapseOnSelect
+      variant="light">
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>LA CASA DEL LIQOUR</Navbar.Brand>
+            <Navbar.Brand className="text-color">
+              LA CASA DEL LIQOUR
+            </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -32,8 +38,8 @@ const Header = () => {
               <LinkContainer to="/cart">
                 <Nav.Link>
                   <i className="fas fa-shopping-cart"></i> Cart
-                  <sup className="supp">
-                  {cartItems && cartItems.length}
+                  <sup className="">
+                    <div className="supp">{cartItems && cartItems.length} </div>
                   </sup>
                 </Nav.Link>
               </LinkContainer>

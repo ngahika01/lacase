@@ -11,9 +11,9 @@ const Meta = ({ title, description, keywords }) => {
   );
 };
 Meta.defaultProps = {
-  title: "Welcome to proshop",
-  keywords: "electronicsbuy electronics, cheap electronics",
-  description: "We sell the best products for cheap",
+  title: "Welcome to La casa del liqour",
+  keywords: "Black Label, Red Label, Amarula, Kenya, Ryoisambu",
+  description: "Quench your thirst with us.",
 };
 
 export default Meta;

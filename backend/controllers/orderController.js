@@ -1,9 +1,8 @@
 import AsyncHandler from "express-async-handler";
 import Order from "..//models/orderModel.js";
-
+import { Mpesa } from "mpesa-api";
 //Lipa na mpesa
 const lipaNaMpesa = AsyncHandler(async (req, res) => {
-
   const environment = "sandbox";
   const credentials = {
     clientKey: process.env.CONSUMER_KEY,
@@ -11,17 +10,18 @@ const lipaNaMpesa = AsyncHandler(async (req, res) => {
     initiatorPassword: "Safaricom998!",
   };
   const mpesa = new Mpesa(credentials, environment);
-  const { amount, PartyA, PhoneNumber } = req.body;
+  const { amount } = req.body;
+  // phone number and party A
 
   try {
     const response = await mpesa.lipaNaMpesaOnline({
       BusinessShortCode: 174379,
       Amount: amount /* 1000 is an example amount */,
-      PartyA: 254757164343,
-      PhoneNumber: 254757164343,
+      PartyA: 254729842998,
+      PhoneNumber: 254729842998,
       PartyB: 174379,
       CallBackURL: "https://developer.safaricom.co.ke/",
-      AccountReference: "food app",
+      AccountReference: "LA CASA DEL LIQOUR",
       passKey: process.env.PASS_KEY,
       TransactionType: "CustomerPayBillOnline",
     });
@@ -51,6 +51,7 @@ const queryStatus = AsyncHandler(async (req, res) => {
     res.json(result);
   } catch (error) {
     console.log(error);
+    process.exit(1);
   }
 });
 

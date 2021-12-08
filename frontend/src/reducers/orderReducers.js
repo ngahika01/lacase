@@ -20,6 +20,10 @@ import {
   ORDER_DELIVER_REQUEST,
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_RESET,
+  ORDER_MPESA_REQUEST,
+  ORDER_MPESA_SUCCESS,
+  ORDER_MPESA_FAIL,
+  ORDER_MPESA_RESET,
 } from "../constants/orderConstants";
 export const orderCreateReducer = (state = {}, action) => {
   switch (action.type) {
@@ -66,6 +70,22 @@ export const orderPayReducer = (state = {}, action) => {
     case ORDER_PAY_FAIL:
       return { loading: false, error: action.payload };
     case ORDER_PAY_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+export const orderPayMpesaReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_MPESA_REQUEST:
+      return {
+        loading: true,
+      };
+    case ORDER_MPESA_SUCCESS:
+      return { loading: false, success: true };
+    case ORDER_MPESA_FAIL:
+      return { loading: false, error: action.payload };
+    case ORDER_MPESA_RESET:
       return {};
     default:
       return state;

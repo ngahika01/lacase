@@ -4,7 +4,7 @@ import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import CheckoutSteps from "../components/CheckoutSteps";
-import { createOrder } from "../actions/orderActions";
+import { createOrder ,payMpesaOrder} from "../actions/orderActions";
 
 import { USER_DETAILS_RESET } from "../constants/userConstansts";
 
@@ -37,6 +37,9 @@ const PlaceOrderScreen = ({ history }) => {
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
 
+  const orderMpesa = useSelector((state) => state.orderMpesa);
+  const { loading } = orderMpesa;
+
   useEffect(() => {
     if (success) {
       history.push(`/order/${order._id}`);
@@ -46,17 +49,20 @@ const PlaceOrderScreen = ({ history }) => {
   }, [history, success]);
 
   const placeOrderHandler = () => {
-    dispatch(
-      createOrder({
-        orderItems: cart.cartItems,
-        shippingAddress: cart.shippingAddress,
-        paymentMethod: cart.paymentMethod,
-        itemsPrice: cart.itemsPrice,
-        shippingPrice: cart.shippingPrice,
-        taxPrice: cart.taxPrice,
-        totalPrice: cart.totalPrice,
-      })
-    );
+
+    dispatch(payMpesaOrder({totalPrice:cart.totalPrice}))
+    
+    // dispatch(
+    //   createOrder({
+    //     orderItems: cart.cartItems,
+    //     shippingAddress: cart.shippingAddress,
+    //     paymentMethod: cart.paymentMethod,
+    //     itemsPrice: cart.itemsPrice,
+    //     shippingPrice: cart.shippingPrice,
+    //     taxPrice: cart.taxPrice,
+    //     totalPrice: cart.totalPrice,
+    //   })
+    // );
   };
 
   return (
@@ -151,10 +157,10 @@ const PlaceOrderScreen = ({ history }) => {
                 <Button
                   type="button"
                   className="btn-block"
-                  disabled={cart.cartItems === 0}
+                  disabled={cart.cartItems === 0 || loading}
                   onClick={placeOrderHandler}
                 >
-                  Place Order
+                  Pay Now And Place Order
                 </Button>
               </ListGroup.Item>
             </ListGroup>
