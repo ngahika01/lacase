@@ -16,7 +16,7 @@ const lipaNaMpesa = AsyncHandler(async (req, res) => {
   try {
     const response = await mpesa.lipaNaMpesaOnline({
       BusinessShortCode: 174379,
-      Amount: amount /* 1000 is an example amount */,
+      Amount: amount ,
       PartyA: 254729842998,
       PhoneNumber: 254729842998,
       PartyB: 174379,

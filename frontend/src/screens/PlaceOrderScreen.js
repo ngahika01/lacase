@@ -4,7 +4,7 @@ import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import CheckoutSteps from "../components/CheckoutSteps";
-import { createOrder ,payMpesaOrder} from "../actions/orderActions";
+import { createOrder, payMpesaOrder } from "../actions/orderActions";
 
 import { USER_DETAILS_RESET } from "../constants/userConstansts";
 
@@ -49,9 +49,8 @@ const PlaceOrderScreen = ({ history }) => {
   }, [history, success]);
 
   const placeOrderHandler = () => {
+    dispatch(payMpesaOrder({ amount: 1 }));
 
-    dispatch(payMpesaOrder({totalPrice:cart.totalPrice}))
-    
     // dispatch(
     //   createOrder({
     //     orderItems: cart.cartItems,

@@ -7,7 +7,7 @@ const Footer = () => {
       <Container>
         <Row>
           <Col className="text-center py-3 ">
-            <h4> Talk to us today. +254 07 93 810 040 </h4>
+            <h4> Talk to us today. +254 793 810 040 </h4>
             <h5 className="p-2">
               {date.getFullYear() + " "}
               Copyright &copy; LA CASA DE LIQOUR.
