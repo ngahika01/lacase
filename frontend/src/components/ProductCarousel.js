@@ -1,41 +1,77 @@
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { Carousel, Image } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
-import Loader from './Loader'
-import Message from './Message'
-import { listTopProducts } from '../actions/productAction'
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Carousel, Image } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import Loader from "./Loader";
+import Message from "./Message";
+import { listTopProducts } from "../actions/productAction";
 
 const ProductCarousel = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const productTopRated = useSelector((state) => state.productTopRated)
-  const { loading, error, products } = productTopRated
+  const productTopRated = useSelector((state) => state.productTopRated);
+  const { loading, error, products } = productTopRated;
 
   useEffect(() => {
-    dispatch(listTopProducts())
-  }, [dispatch])
+    dispatch(listTopProducts());
+  }, [dispatch]);
 
   return loading ? (
     <Loader />
   ) : error ? (
     <Message variant="danger">{error}</Message>
   ) : (
-    <Carousel pause="hover" className="bg-image mt-5 "  >
-      {products.map((product) => (
-        <Carousel.Item key={product._id}>
-          <Link to={`/product/${product._id}`}>
-            <Image src={product.image} alt={product.name} fluid />
-            <Carousel.Caption className="carousel-caption">
-              <h2 className="text-color">
-                {product.name} (Ksh{product.price})
-              </h2>
-            </Carousel.Caption>
-          </Link>
-        </Carousel.Item>
-      ))}
-    </Carousel>
-  );
-}
+    <>
+      <section class="slider_section">
+        <div class="slider_bg_box">
+          <img src="images/slider-bg.jpg" alt="" />
+        </div>
+        <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            {products.map((product, index) => (
+              <div class={`carousel-item ${index === 1 && `active`} `}>
+                <div class="container ">
+                  <div class="row">
+                    <div class="col-md-7 col-lg-6 ">
+                      <img src={product.image} className="custom-img" />
 
-export default ProductCarousel
+                      <div class="detail-box">
+                        <h1>
+                          <span>{product.name}</span>
+                        </h1>
+                        <h2>
+                          <del>Was: ksh 1000 </del>
+                          Now {product.price}
+                        </h2>
+
+                        <div class="btn-box">
+                          <Link to={`/product/${product._id}`} class="btn1">
+                            Shop Now
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div class="container">
+            <ol class="carousel-indicators">
+              <li
+                data-target="#customCarousel1"
+                data-slide-to="0"
+                class="active"
+              ></li>
+              <li data-target="#customCarousel1" data-slide-to="1"></li>
+              <li data-target="#customCarousel1" data-slide-to="2"></li>
+            </ol>
+          </div>
+        </div>
+      </section>
+    
+    </>
+  );
+};
+
+export default ProductCarousel;

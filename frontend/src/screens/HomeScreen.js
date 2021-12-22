@@ -30,20 +30,29 @@ const HomeScreen = ({ match }) => {
           Go Back
         </Link>
       )}
-      <h1>Latest products</h1>
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
         <>
-          <Row>
-            {products.map((product) => (
-              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                <Product product={product} />
-              </Col>
-            ))}
-          </Row>
+          <section class="product_section layout_padding">
+            <div class="container">
+              <div class="heading_container heading_center">
+                <h2>
+                  Our <span>products</span>
+                </h2>
+              </div>
+              <div class="row">
+                {products.map((product) => (
+                  <div class="col-sm-6 col-md-4 col-lg-4">
+                    <Product product={product} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+         
           <Paginate
             pages={pages}
             page={page}

@@ -14,6 +14,7 @@ import {
   Button,
   ListGroupItem,
   Form,
+  Container,
 } from "react-bootstrap";
 import Rating from "./../components/Rating";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,10 +33,8 @@ const ProductScreen = ({ history, match }) => {
   const { loading, error, product } = productDetails;
 
   const productReviewCreate = useSelector((state) => state.productReviewCreate);
-  const {
-    success: successProductReview,
-    error: errorProductReview,
-  } = productReviewCreate;
+  const { success: successProductReview, error: errorProductReview } =
+    productReviewCreate;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -64,8 +63,8 @@ const ProductScreen = ({ history, match }) => {
     history.push(`/cart/${match.params.id}?qty=${qty}`);
   };
   return (
-    <>
-      <Link className="btn btn-light my-3" to="/">
+    <Container>
+      <Link className="btn btn-info my-3" to="/">
         Go Back
       </Link>
       {loading ? (
@@ -74,10 +73,15 @@ const ProductScreen = ({ history, match }) => {
         <Message variant="danger">{error} </Message>
       ) : (
         <>
-        <Meta title={product.name}/>
+          <Meta title={product.name} />
           <Row>
             <Col md={6}>
-              <Image src={product.image} alt={product.name} fluid className="w-50" />
+              <Image
+                src={product.image}
+                alt={product.name}
+                fluid
+                className="w-50"
+              />
             </Col>
             <Col md={3}>
               <ListGroup variant="flush">
@@ -146,7 +150,7 @@ const ProductScreen = ({ history, match }) => {
                   <ListGroupItem>
                     <Button
                       onClick={addToCartHandler}
-                      className="btn-block"
+                      className="btn-block btn-danger"
                       type="button"
                       disabled={product.countInStock === 0}
                     >
@@ -219,7 +223,7 @@ const ProductScreen = ({ history, match }) => {
           </Row>
         </>
       )}
-    </>
+    </Container>
   );
 };
 

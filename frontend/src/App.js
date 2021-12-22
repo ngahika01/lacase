@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import HomeScreen from "./screens/HomeScreen";
@@ -25,7 +25,7 @@ const App = () => {
     <Router>
       <Header />
       <main className="py-3 ">
-        <Container>
+        <>
           <Route path="/login" exact component={LoginScreen} />
           <Route path="/register" exact component={RegisterScreen} />
           <Route path="/profile" exact component={ProfileScreen} />
@@ -62,7 +62,7 @@ const App = () => {
             exact
           />
           <Route path="/" component={HomeScreen} exact />
-        </Container>
+        </>
       </main>
       <Footer />
     </Router>

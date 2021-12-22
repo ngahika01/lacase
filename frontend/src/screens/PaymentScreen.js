@@ -13,14 +13,15 @@ const PaymentScreen = ({ history }) => {
   }
   const dispatch = useDispatch();
 
-  const [paymentMethod, setPaymentMethod] = useState("PayPal");
+  const [paymentMethod, setPaymentMethod] = useState("mpesa");
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(savePaymentMethod(paymentMethod));
-    history.push("/placeorder");
+    if (paymentMethod === "mpesa") {
+      history.push("/placeorder");
+    }
   };
 
-  
   return (
     <FormContainer>
       <CheckoutSteps step1 step2 step3 />
@@ -30,28 +31,31 @@ const PaymentScreen = ({ history }) => {
           <Form.Label as="legend">Select Method</Form.Label>
 
           <Col>
-            <div className="mpsa">
-              <Form.Check
-                type="radio"
-                label="Mpesa"
-                id="mpesa"
-                name="paymentMethod"
-                value="mpesa"
-                checked
-                onChange={(e) => setPaymentMethod(e.target.value)}
-              ></Form.Check>
-              <Image
-                className="w-50"
-                src={
-                  "https://hapakenya.com/wp-content/uploads/2019/06/lipa-na-mpesa-paybill.png"
-                }
-              />
+            <div className="form-group">
+              <button
+                value={"mpesa"}
+                className="badge badge-success"
+                onClick={(e) => setPaymentMethod("mpesa")}
+              >
+                Mpesa{" "}
+              </button>
+              <button
+                id="payOnDelivery"
+                value="payOnDelivery"
+                className="badge badge-primary m-4"
+                onClick={(e) => {
+                  alert("Comin soon");
+                  setPaymentMethod("payOnDelivery");
+                }}
+              >
+                payOnDelivery{" "}
+              </button>
             </div>
           </Col>
         </Form.Group>
-        <Button type="submit" variant="primary">
+        <button type="submit" className="btn btn-danger">
           Continue
-        </Button>
+        </button>
       </Form>
     </FormContainer>
   );
