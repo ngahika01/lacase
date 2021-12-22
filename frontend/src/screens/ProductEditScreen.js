@@ -18,6 +18,7 @@ const ProductEditScreen = ({ match, history }) => {
   const [category, setCategory] = useState("");
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
+  const [discountPrice, setdiscountedPrice] = useState(0);
   const [uploading, setUploading] = useState(false);
 
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ const ProductEditScreen = ({ match, history }) => {
         setCategory(product.category);
         setCountInStock(product.countInStock);
         setDescription(product.description);
+        setdiscountedPrice(product.discountPrice);
       }
     }
   }, [dispatch, history, productId, product, successUpdate]);
@@ -81,8 +83,9 @@ const ProductEditScreen = ({ match, history }) => {
         description,
         image,
         brand,
-        countInStock,
         price,
+        countInStock,
+        discountPrice,
       })
     );
   };
@@ -176,6 +179,15 @@ const ProductEditScreen = ({ match, history }) => {
                 placeholder="Enter description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group controlId="discounted price">
+              <Form.Label>Discounted Price</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Enter description"
+                value={discountPrice}
+                onChange={(e) => setdiscountedPrice(e.target.value)}
               ></Form.Control>
             </Form.Group>
 

@@ -104,6 +104,7 @@ const ProductListScreen = ({ history, match }) => {
                 <th>PRICE</th>
                 <th>CATEGORY</th>
                 <th>BRAND</th>
+                <th>DISCOUNTED PRICE</th>
                 <th></th>
               </tr>
             </thead>
@@ -115,6 +116,7 @@ const ProductListScreen = ({ history, match }) => {
                   <td>ksh {product.price}</td>
                   <td>{product.category}</td>
                   <td>{product.brand}</td>
+                  <td>{product.discountPrice}</td>
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
                       <Button

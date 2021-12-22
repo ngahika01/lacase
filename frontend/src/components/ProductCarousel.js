@@ -40,8 +40,12 @@ const ProductCarousel = () => {
                           <span>{product.name}</span>
                         </h1>
                         <h2>
-                          <del>Was: ksh 1000 </del>
-                          Now {product.price}
+                          <del>Was: ksh {product.discountPrice > 0 &&  product.price} </del>
+                          <br />
+                          Now{" "}
+                          {product.discountPrice > 0
+                            ? product.discountPrice
+                            : product.price}
                         </h2>
 
                         <div class="btn-box">
@@ -69,7 +73,6 @@ const ProductCarousel = () => {
           </div>
         </div>
       </section>
-    
     </>
   );
 };

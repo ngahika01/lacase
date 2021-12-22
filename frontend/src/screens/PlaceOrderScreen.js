@@ -1,12 +1,21 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Button, Row, Col, ListGroup, Image, Card, Container } from "react-bootstrap";
+import {
+  Button,
+  Row,
+  Col,
+  ListGroup,
+  Image,
+  Card,
+  Container,
+} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import CheckoutSteps from "../components/CheckoutSteps";
 import { createOrder, payMpesaOrder } from "../actions/orderActions";
 
 import { USER_DETAILS_RESET } from "../constants/userConstansts";
+import { CART_RESET } from "../constants/cartConstants";
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -42,8 +51,10 @@ const PlaceOrderScreen = ({ history }) => {
 
   useEffect(() => {
     if (success) {
-      history.push(`/order/${order._id}`);
+      history.push(`/`);
       dispatch({ type: USER_DETAILS_RESET });
+      dispatch({type: CART_RESET});
+      alert("Order placed successfully");
     }
     // eslint-disable-next-line
   }, [history, success]);
@@ -51,17 +62,17 @@ const PlaceOrderScreen = ({ history }) => {
   const placeOrderHandler = () => {
     dispatch(payMpesaOrder({ amount: 1 }));
 
-    // dispatch(
-    //   createOrder({
-    //     orderItems: cart.cartItems,
-    //     shippingAddress: cart.shippingAddress,
-    //     paymentMethod: cart.paymentMethod,
-    //     itemsPrice: cart.itemsPrice,
-    //     shippingPrice: cart.shippingPrice,
-    //     taxPrice: cart.taxPrice,
-    //     totalPrice: cart.totalPrice,
-    //   })
-    // );
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
   };
 
   return (
@@ -75,7 +86,6 @@ const PlaceOrderScreen = ({ history }) => {
               <p>
                 <strong>Address:</strong>
                 {cart.shippingAddress.address}
-               
               </p>
             </ListGroup.Item>
 
@@ -158,7 +168,7 @@ const PlaceOrderScreen = ({ history }) => {
                   disabled={cart.cartItems === 0 || loading}
                   onClick={placeOrderHandler}
                 >
-                  Pay Now And Place Order
+                  Place Order
                 </Button>
               </ListGroup.Item>
             </ListGroup>

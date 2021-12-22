@@ -63,6 +63,7 @@ const createProduct = AsyncHandler(async (req, res) => {
     countInStock: 0,
     numReviews: 0,
     description: "Sample description",
+    discountPrice: 0,
   });
   const createdProduct = await product.save();
   res.status(201).json(createdProduct);
@@ -80,6 +81,7 @@ const updateProduct = AsyncHandler(async (req, res) => {
     brand,
     category,
     countInStock,
+    discountPrice,
   } = req.body;
   const product = await Product.findById(req.params.id);
   if (product) {
@@ -90,6 +92,7 @@ const updateProduct = AsyncHandler(async (req, res) => {
     product.brand = brand;
     product.category = category;
     product.countInStock = countInStock;
+    product.discountPrice = discountPrice;
     const updatedProduct = await product.save();
     res.status(201).json(updatedProduct);
   } else {
@@ -143,7 +146,7 @@ const createProductReview = AsyncHandler(async (req, res) => {
 // @route   POST /api/products/top
 // @access public
 const getTopProducts = AsyncHandler(async (req, res) => {
-  const products = await Product.find({}).sort({ "rating": -1 }).limit(3);
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
   res.json(products);
 });
 export {

@@ -29,8 +29,17 @@ const Product = ({ product, history }) => {
         </div>
         <div class="detail-box">
           <h5>{product.name}</h5>
-          <h6>Ksh {product.price}</h6>
-          <del>Was {product.price + 100}</del>
+          <h6>
+            {product.discountPrice > 0 ? (
+              <div> Now : Ksh <br/>  {product.discountPrice} </div>
+            ) : (
+              <div>  Ksh {product.price} </div>
+            )}
+          </h6>
+          <del>
+            {" "}
+            {product.discountPrice > 0 && <span>Was: {product.price}</span>}
+          </del>
         </div>
       </div>
       {/* <Card className="my-3 p-3 rounded my-card">

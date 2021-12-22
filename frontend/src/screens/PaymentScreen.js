@@ -17,7 +17,7 @@ const PaymentScreen = ({ history }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(savePaymentMethod(paymentMethod));
-    if (paymentMethod === "mpesa") {
+    if (paymentMethod === "payOnDelivery") {
       history.push("/placeorder");
     }
   };
@@ -35,7 +35,10 @@ const PaymentScreen = ({ history }) => {
               <button
                 value={"mpesa"}
                 className="badge badge-success"
-                onClick={(e) => setPaymentMethod("mpesa")}
+                onClick={(e) => {
+                  setPaymentMethod("mpesa");
+                  alert("Comin soon");
+                }}
               >
                 Mpesa{" "}
               </button>
@@ -44,7 +47,6 @@ const PaymentScreen = ({ history }) => {
                 value="payOnDelivery"
                 className="badge badge-primary m-4"
                 onClick={(e) => {
-                  alert("Comin soon");
                   setPaymentMethod("payOnDelivery");
                 }}
               >
