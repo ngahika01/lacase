@@ -16,7 +16,7 @@ const lipaNaMpesa = AsyncHandler(async (req, res) => {
   try {
     const response = await mpesa.lipaNaMpesaOnline({
       BusinessShortCode: 174379,
-      Amount: amount ,
+      Amount: amount,
       PartyA: 254729842998,
       PhoneNumber: 254729842998,
       PartyB: 174379,
@@ -140,6 +140,24 @@ const updateOrderToDelivered = AsyncHandler(async (req, res) => {
   }
 });
 
+// @desc PUT
+//@route GET /api/orders/updateall
+//@access admin
+const updateAllOrders = AsyncHandler(async (req, res) => {
+  const od = req.params.id;
+  const order = await Order.findById(od);
+  if (order) {
+    order.isDelivered = true;
+    order.isPaid = true;
+    order.deliveredAt = Date.now();
+    const updatedOrder = await order.save();
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error("Order not found");
+  }
+});
+
 // @desc get logged in user orders
 //@route GET /api/orders/myorders
 //@access private
@@ -164,4 +182,5 @@ export {
   updateOrderToDelivered,
   lipaNaMpesa,
   queryStatus,
+  updateAllOrders,
 };

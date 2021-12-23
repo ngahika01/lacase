@@ -1,16 +1,23 @@
-import React from "react";
-import { Button, Col, Container, Row ,Table} from "react-bootstrap";
+import React, { useEffect } from "react";
+import moment from "moment";
+import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
+import { listMyOrders } from "../actions/orderActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 
-const MyOrders = ({history}) => {
+const MyOrders = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const orderListMy = useSelector((state) => state.orderListMy);
-  const { orders,error,loading } = orderListMy;
+  const { orders, error, loading } = orderListMy;
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(listMyOrders());
+  }, [dispatch]);
   if (!userInfo) {
     history.back();
   }
@@ -28,7 +35,7 @@ const MyOrders = ({history}) => {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>DATE</th>
+                  <th>DATE PLACED</th>
                   <th>TOTAL</th>
                   <th>PAID</th>
                   <th>DELIVERED</th>
@@ -36,43 +43,36 @@ const MyOrders = ({history}) => {
                 </tr>
               </thead>
               <tbody>
-                {orders && orders.map((order) => (
-                  <tr key={order._id}>
-                    <td>{order._id} </td>
-                    <td> {order.createdAt.substring(0, 10)} </td>
+                {orders &&
+                  orders.map((order) => (
+                    <tr key={order._id}>
+                      <td>{order._id} </td>
+                      <td> {moment(order.createdAt).format("MMM Do YY")} </td>
 
-                    <td>{order.totalPrice} </td>
-                    <td>
-                      {order.isPaid ? (
-                        order.paidAt.substring(0, 10)
-                      ) : (
-                        <i
-                          className="fas fa-times"
-                          style={{ color: "red" }}
-                        ></i>
-                      )}
-                    </td>
+                      <td>{order.totalPrice} </td>
+                      <td>
+                        {order.isPaid ? (
+                          order.paidAt.substring(0, 10)
+                        ) : (
+                          <i
+                            className="fas fa-times"
+                            style={{ color: "red" }}
+                          ></i>
+                        )}
+                      </td>
 
-                    <td>
-                      {order.isDeliveredAt ? (
-                        order.deliveredAt.substring(0, 10)
-                      ) : (
-                        <i
-                          className="fas fa-times"
-                          style={{ color: "red" }}
-                        ></i>
-                      )}{" "}
-                    </td>
-                    <td>
-                      <LinkContainer to={`/order/${order._id}`}>
-                        <Button className="btn-sm" variant="light">
-                          {" "}
-                          Details
-                        </Button>
-                      </LinkContainer>
-                    </td>
-                  </tr>
-                ))}
+                      <td>
+                        {order.isDeliveredAt ? (
+                          order.deliveredAt.substring(0, 10)
+                        ) : (
+                          <i
+                            className="fas fa-times"
+                            style={{ color: "red" }}
+                          ></i>
+                        )}{" "}
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </Table>
           )}

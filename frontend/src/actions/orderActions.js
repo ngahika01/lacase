@@ -20,6 +20,9 @@ import {
   ORDER_MPESA_SUCCESS,
   ORDER_MPESA_FAIL,
   ORDER_MPESA_REQUEST,
+  ORDER_UPDATE_ALL_SUCCESS,
+  ORDER_UPDATE_ALL_FAIL,
+  ORDER_UPDATE_ALL_REQUEST,
 } from "../constants/orderConstants";
 import axios from "axios";
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -170,6 +173,39 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_DELIVER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateAllOrders = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_UPDATE_ALL_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.put(
+      `/api/orders/updateAll/${id}`,
+      {},
+      config
+    );
+    dispatch({
+      type: ORDER_UPDATE_ALL_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDER_UPDATE_ALL_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

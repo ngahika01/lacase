@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button } from "react-bootstrap";
+import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -21,11 +22,10 @@ const OrderListScreen = ({ history }) => {
       history.push("/login");
     }
   }, [dispatch, userInfo, history]);
- 
-  
+
   return (
     <>
-      <h1>Orders</h1>
+      <h1> {orders && orders.length} Orders</h1>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -47,34 +47,34 @@ const OrderListScreen = ({ history }) => {
               <tr key={order._id}>
                 <td>{order._id} </td>
                 <td> {order.user && order.user.name} </td>
-                
-                <td>{order.createdAt.substring(0,10)} </td>
-                <td> ${ order.totalPrice } </td>
-               
+
+                <td>{order.createdAt.substring(0, 10)} </td>
+                <td> ${order.totalPrice} </td>
+
                 <td>
                   {order.isPaid ? (
-                      order.paidAt.substring(0,10)
+                    moment(order.paidAt).format("MMM Do YY")
                   ) : (
                     <i className="fas fa-times" style={{ color: "red" }}></i>
                   )}{" "}
                 </td>
-               
-                <td>
 
+                <td>
                   {order.isDelivered ? (
-                      order.deliveredAt.substring(0,10)
+                    moment(order.deliveredAt).format("MMM Do YY")
                   ) : (
                     <i className="fas fa-times" style={{ color: "red" }}></i>
                   )}{" "}
                 </td>
                 <td>
-
-                  <LinkContainer to={`/order/${order._id}`}>
-                    <Button variant="light" className="btn btn-outline-info btn-sm">
-                      Details
-                    </Button>
-                  </LinkContainer>
-                
+                  <td>
+                    <LinkContainer to={`/productupdate/${order._id}`}>
+                      <Button className="btn-sm" variant="light">
+                        {" "}
+                        <i className="fas fa-edit"></i>
+                      </Button>
+                    </LinkContainer>
+                  </td>
                 </td>
               </tr>
             ))}
@@ -83,6 +83,6 @@ const OrderListScreen = ({ history }) => {
       )}
     </>
   );
-                  }
+};
 
 export default OrderListScreen;

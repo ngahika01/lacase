@@ -51,7 +51,7 @@ const PlaceOrderScreen = ({ history }) => {
 
   useEffect(() => {
     if (success) {
-      history.push(`/`);
+      history.push(`/orders`);
       dispatch({ type: USER_DETAILS_RESET });
       dispatch({type: CART_RESET});
       alert("Order placed successfully");
